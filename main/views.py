@@ -59,13 +59,22 @@ class SongViewSet(PermissionsMixin, viewsets.ModelViewSet):
         if not created:
             obj.favourite = not obj.favourite
             obj.save()
-        if not obj.favourite:
+        if obj.favourite:
             favourites = 'added to favourites!'
         else:
             favourites = 'removed from favourites'
         # favourites = 'added to favourites!' if obj.favourite else 'removed to favorites'
 
         return Response(f'Successfully {favourites} !', status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'])
+    def recommendations(self, request, pk=None):
+        queryset = Song.objects.all()
+        object = self.get_object()
+        queryset = queryset.filter(uploader=request.user, genre=object.genre)
+        serializer = SongSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
 class LikeViewset(PermissionsMixin, viewsets.ModelViewSet):

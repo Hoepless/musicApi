@@ -1,0 +1,30 @@
+
+
+.container {
+    background: rgb(100, 144, 100);
+    margin: 50px auto;
+    max-width: 80%;
+    text-align: center;
+    padding: 2%;
+}
+
+button {
+    margin: 1em;
+}
+
+input {
+    margin-top: 1em;
+}
+
+#btnCreateChat, #acceptDiv, #div_message {
+    display: none
+}
+
+.footer {
+    background: rgb(200, 255, 144);
+    text-align: center;
+    padding: 2%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

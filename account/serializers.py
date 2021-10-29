@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.core.mail import send_mail
 
 
-from .models import User
+from .models import User, UserFollowing
 from .tasks import send_activation_code_task, send_beat_mail_task
 
 
@@ -77,3 +77,40 @@ class CompleteResetPasswordSerializer(serializers.Serializer):
         user = User.objects.get(email=email)
         user.set_password(password)
         user.save()
+
+
+class UserFollowingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFollowing
+        fields = '__all__'
+
+
+class FollowingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFollowing
+        fields = ("id", "following_user_id", "created")
+
+
+class FollowersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFollowing
+        fields = ("id", "user_id", "created")
+
+
+class UserSerializer(serializers.ModelSerializer):
+    following = serializers.SerializerMethodField()
+    followers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "following",
+            "followers",
+        )
+
+    def get_following(self, obj):
+        return FollowingSerializer(obj.following.all(), many=True).data
+
+    def get_followers(self, obj):
+        return FollowersSerializer(obj.followers.all(), many=True).data

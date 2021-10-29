@@ -1,8 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import viewsets
 
-from .models import User
-from .serializers import RegisterSerializer, CompleteResetPasswordSerializer, ResetPasswordSerializer
+from .models import User, UserFollowing
+from .serializers import RegisterSerializer, CompleteResetPasswordSerializer, ResetPasswordSerializer, \
+    UserFollowingSerializer, UserSerializer
 
 
 class RegisterView(APIView):
@@ -56,3 +58,20 @@ class CompleteResetPasswordView(APIView):
             return Response(
                 'Password successfully reset'
             )
+
+
+class UserFollowingViewSet(viewsets.ModelViewSet):
+
+    serializer_class = UserFollowingSerializer
+    queryset = UserFollowing.objects.all()
+
+
+class ListFollower(APIView):
+
+    def get(self, request):
+        data = request.data
+        serializer = UserSerializer(data=data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response("", 201)

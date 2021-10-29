@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+
+from account.models import UserFollowing
 from .models import Song, Comment, Like, Rating, Genre, Favourite
 
 
@@ -107,3 +109,4 @@ class FavouriteSerializer(serializers.ModelSerializer):
         representation['author'] = instance.author.email
         representation['song'] = instance.song.title
         return representation
+

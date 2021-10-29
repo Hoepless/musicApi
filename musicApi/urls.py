@@ -9,6 +9,7 @@ from rest_framework import permissions
 
 from main.views import SongViewSet, GenreListView, LikeViewset, RatingViewset, \
     CommentViewset
+from account.views import UserFollowingViewSet
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -28,12 +29,14 @@ router.register('songs', SongViewSet)
 router.register('likes', LikeViewset)
 router.register('comments', CommentViewset)
 router.register('ratings', RatingViewset)
+router.register('follow', UserFollowingViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/account/', include('account.urls')),
     path('api/v1/', include(router.urls)),
     path('api/v1/genres/', GenreListView.as_view()),
+    path('', include('src.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
