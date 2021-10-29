@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'channels',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [

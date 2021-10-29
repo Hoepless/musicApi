@@ -8,7 +8,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 
 from main.views import SongViewSet, GenreListView, LikeViewset, RatingViewset, \
-    CommentViewset
+    CommentViewset, ParsingView
 from account.views import UserFollowingViewSet
 
 schema_view = get_schema_view(
@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/genres/', GenreListView.as_view()),
     path('', include('src.urls')),
+    path('api/v1/charts/', ParsingView.as_view()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

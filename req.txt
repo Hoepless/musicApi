@@ -17,3 +17,4 @@ django-environ-2==2.1.0
 django-cors-headers
 channels
 channels_redis
+django-celery-beat

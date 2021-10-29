@@ -5,6 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import HttpResponse
+import csv
+from rest_framework.views import APIView
 
 
 from .models import *
@@ -91,3 +94,18 @@ class RatingViewset(PermissionsMixin, viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
+
+class ParsingView(APIView):
+
+    def get(self, request):
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={'Content-Disposition': 'attachment; filename="data.csv"'},
+        )
+        list_ = []
+        data = open('./data.csv')
+        list_ = data.read()
+        data = csv.writer(response)
+        data.writerow([list_])
+
+        return response
