@@ -29,7 +29,7 @@ class Song(models.Model):
 
 class Like(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes', null=True)
-    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='likes')
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='likes', blank=True)
     likes = models.BooleanField(default=False)
 
     def __str__(self):

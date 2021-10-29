@@ -79,7 +79,6 @@ class SongViewSet(PermissionsMixin, viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 class LikeViewset(PermissionsMixin, viewsets.ModelViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer

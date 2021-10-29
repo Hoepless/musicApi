@@ -51,7 +51,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('author', 'comment', 'created_at', )
+        fields = ('author', 'comment',)
 
     def create(self, validated_data):
         request = self.context.get('request')
@@ -65,7 +65,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = ('author', 'likes', )
+        fields = '__all__'
 
     def create(self, validated_data):
         request = self.context.get('request')
